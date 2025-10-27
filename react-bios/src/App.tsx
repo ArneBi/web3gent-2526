@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 const BASE_URL = "https://api.themoviedb.org/3/movie/popular";
-const IMG_BASE_URL = "https://image.tmdb.org/t/p/original/";
+const IMG_BASE_URL = "https://image.tmdb.org/t/p/original";
 
 const API_TOKEN = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -85,18 +85,25 @@ function App() {
 
   return (
     <div className="p-8 bg-slate-200 flex flex-col gap-4">
-      <button
+      {/* <button
         className="bg-teal-600 text-2xl text-white uppercase font-black px-4 py-2 cursor-pointer hover:bg-teal-800 rounded-lg"
         onClick={() => {
           setIsRefresh(!isRefresh);
         }}>
         Ververs
-      </button>
-      {movies.map((m) => (
-        <div key={m.id}>
-          <h1>{m.poster_path}</h1>
-        </div>
-      ))}
+      </button> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {movies.map((m) => (
+          <div
+            className="shadow-2xl rounded-xl overflow-clip hover:scale-105 duration-700 cursor-pointer bg-white"
+            key={m.id}>
+            <img src={`${IMG_BASE_URL}${m.poster_path}`} alt={m.title} />
+            <div className="py-4 text-center">
+              <h1 className="font-bold text-2xl text-teal-700">{m.title}</h1>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
