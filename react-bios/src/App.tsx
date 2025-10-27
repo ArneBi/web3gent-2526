@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 const BASE_URL = "https://api.themoviedb.org/3/movie/popular";
+const IMG_BASE_URL = "https://image.tmdb.org/t/p/original/";
+
 const API_TOKEN = import.meta.env.VITE_TMDB_API_KEY;
 
 import Axios from "axios";
@@ -92,7 +94,7 @@ function App() {
       </button>
       {movies.map((m) => (
         <div key={m.id}>
-          <h1>{m.title}</h1>
+          <h1>{m.poster_path}</h1>
         </div>
       ))}
     </div>
