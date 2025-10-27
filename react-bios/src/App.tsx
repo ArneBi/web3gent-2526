@@ -7,6 +7,7 @@ const IMG_BASE_URL = "https://image.tmdb.org/t/p/original";
 const API_TOKEN = import.meta.env.VITE_TMDB_API_KEY;
 
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface MovieResponse {
   page: number;
@@ -37,7 +38,6 @@ function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   // const [error, setError] = useState();
   const [isRefresh, setIsRefresh] = useState(false);
-
   useEffect(() => {
     const timerId = setInterval(() => {
       fetchMovies();
@@ -83,6 +83,8 @@ function App() {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="p-8 bg-slate-200 flex flex-col gap-4">
       {/* <button
@@ -95,6 +97,9 @@ function App() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {movies.map((m) => (
           <div
+            onClick={() => {
+              navigate(`details/${m.id}`);
+            }}
             className="shadow-2xl rounded-xl overflow-clip hover:scale-105 duration-700 cursor-pointer bg-white"
             key={m.id}>
             <img src={`${IMG_BASE_URL}${m.poster_path}`} alt={m.title} />

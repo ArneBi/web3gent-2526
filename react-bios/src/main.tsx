@@ -12,7 +12,7 @@ const browserRouter = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "details/:id",
+    path: "details/:movieId",
     element: <DetailsPage />,
   },
 ]);
