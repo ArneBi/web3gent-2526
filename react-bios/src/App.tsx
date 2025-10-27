@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 const BASE_URL = "https://api.themoviedb.org/3/movie/popular";
-const API_TOKEN = import.meta.env.TMDB_API_KEY;
+const API_TOKEN = import.meta.env.VITE_TMDB_API_KEY;
+
+import Axios from "axios";
 
 interface MovieResponse {
   page: number;
@@ -46,7 +48,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetchMovies();
+    // fetchMovies();
+    fetchMoviesWithAxios();
   }, [isRefresh]);
 
   const fetchMovies = async () => {
@@ -60,6 +63,20 @@ function App() {
       setMovies(data.results);
     } catch (error) {
       // setError(error);
+      console.log(error);
+    }
+  };
+
+  const fetchMoviesWithAxios = async () => {
+    try {
+      const response = await Axios.get<MovieResponse>(BASE_URL, {
+        headers: {
+          Authorization: import.meta.env.TMDB_API_KEY,
+        },
+      });
+
+      setMovies(response.data.results);
+    } catch (error) {
       console.log(error);
     }
   };
