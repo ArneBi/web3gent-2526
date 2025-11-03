@@ -1,18 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Axios from "axios";
 
 const BASE_FIND_URL = "https://api.themoviedb.org/3/movie/";
 
 const DetailsPage = () => {
   const { movieId } = useParams();
 
-  // TODO: Request met de id uit de params
+  const [movie, setMovie] = useState<Movie>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  return (
-    <div>
-      <p>{movieId}</p>
-    </div>
-  );
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      try {
+        const response = await Axios.get<Movie>(`${BASE_FIND_URL}${movieId}`, {
+          headers: {
+            Authorization: import.meta.env.VITE_TMDB_API_KEY,
+          },
+        });
+        setMovie(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [movieId]);
+
+  // if (isLoading) {
+  //   return <p>Loading....</p>;
+  // }
+
+  return <div>{isLoading ? <p>Loading...</p> : <p>{movie?.title}</p>}</div>;
 };
 
 export default DetailsPage;
