@@ -6,8 +6,11 @@ const IMG_BASE_URL = "https://image.tmdb.org/t/p/original";
 
 const API_TOKEN = import.meta.env.VITE_TMDB_API_KEY;
 
+import { MdOutlineStar, MdOutlineStarBorder } from "react-icons/md";
+
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useFavorites } from "./hooks/useFavorites";
 
 interface MovieResponse {
   page: number;
@@ -85,6 +88,8 @@ function App() {
 
   const navigate = useNavigate();
 
+  const { toggleFavorite, favorites } = useFavorites();
+
   return (
     <div className="p-8 bg-slate-200 flex flex-col gap-4">
       {/* <button
@@ -100,12 +105,26 @@ function App() {
             onClick={() => {
               navigate(`details/${m.id}`);
             }}
-            className="shadow-2xl rounded-xl overflow-clip hover:scale-105 duration-700 cursor-pointer bg-white"
+            className="relative shadow-2xl rounded-xl overflow-clip hover:scale-105 duration-700 cursor-pointer bg-white"
             key={m.id}>
             <img src={`${IMG_BASE_URL}${m.poster_path}`} alt={m.title} />
             <div className="py-4 text-center">
               <h1 className="font-bold text-2xl text-teal-700">{m.title}</h1>
             </div>
+
+            <button
+              onClick={(event) => {
+                toggleFavorite(m);
+
+                event.stopPropagation();
+              }}
+              className="absolute top-2 right-2 bg-teal-500 rounded-full p-2 hover:bg-teal-300">
+              {favorites.some((f) => f.id === m.id) ? (
+                <MdOutlineStar size={24} />
+              ) : (
+                <MdOutlineStarBorder size={24} />
+              )}
+            </button>
           </div>
         ))}
       </div>
