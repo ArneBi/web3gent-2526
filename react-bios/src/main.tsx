@@ -11,6 +11,8 @@ import RootLayout from "./layouts/RootLayout.tsx";
 import FavoritesProvider from "./contexts/FavoritesContext.tsx";
 import FavoritesPage from "./pages/FavoritesPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
 
 const browserRouter = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const browserRouter = createBrowserRouter([
       {
         path: "contact",
         element: <ContactPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
       },
     ],
   },
