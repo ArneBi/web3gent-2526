@@ -15,6 +15,16 @@ const Header = () => {
         Favorieten
       </NavLink>
 
+      <NavLink
+        to="/users"
+        className={({ isActive }) =>
+          `hover:text-amber-200  ${
+            isActive ? "underline underline-offset-8" : "no-underline"
+          }`
+        }>
+        Gebruikers
+      </NavLink>
+
       <Link to="/contact">Contact</Link>
       {/* 
       <a href="/favorites">Favorieten</a> */}

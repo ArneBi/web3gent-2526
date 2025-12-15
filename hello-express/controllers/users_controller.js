@@ -1,5 +1,6 @@
 const { prisma } = require("../config/prisma");
 const bcrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
 // CRUD operaties
@@ -25,6 +26,12 @@ const usersController = {
   },
   create: async (req, res) => {
     try {
+      const result = validationResult(req);
+
+      if (!result.isEmpty()) {
+        return res.status(400).json(result.array());
+      }
+
       const userData = req.body;
 
       const hashedPassword = await bcrypt.hash(userData.password, 12);
@@ -92,6 +99,20 @@ const usersController = {
     } catch (error) {
       return res.sendStatus(500);
     }
+  },
+  verify: async (req, res) => {
+    const userId = req.userId;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    return res.json(user);
+  },
+  logout: async (req, res) => {
+    res.clearCookie("web3Token").sendStatus(200);
   },
 };
 

@@ -16,6 +16,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import UsersPage from "./pages/UsersPage.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import AuthProvider from "./contexts/AuthContext.tsx";
 
 const browserRouter = createBrowserRouter([
   {
@@ -63,9 +64,11 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {/* STAP 4: Provider wrappen rond components */}
     <QueryClientProvider client={queryClient}>
-      <FavoritesProvider>
-        <RouterProvider router={browserRouter} />\{/* <App /> */}
-      </FavoritesProvider>
+      <AuthProvider>
+        <FavoritesProvider>
+          <RouterProvider router={browserRouter} />\{/* <App /> */}
+        </FavoritesProvider>
+      </AuthProvider>
     </QueryClientProvider>
   </StrictMode>
 );

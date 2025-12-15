@@ -1,6 +1,7 @@
 const express = require("express");
 const usersController = require("../controllers/users_controller");
 const authMiddleware = require("../middlewares/auth_middleware");
+const { registerValidator } = require("../validators/register_validator");
 const router = express.Router();
 
 const users = [
@@ -17,11 +18,16 @@ const users = [
 // http://localhost:3000/users/
 
 router.post("/login", usersController.login);
-router.post("/", usersController.create);
+router.post("/", registerValidator, usersController.create);
 
 router.use(authMiddleware);
 
 router.get("/", usersController.getAll);
+
+router.get("/verify", usersController.verify);
+
+router.get("/logout", usersController.logout);
+
 router.get("/info", (req, res) => {
   res.send("Info ");
 });

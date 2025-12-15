@@ -2,9 +2,15 @@ import { useFormik } from "formik";
 import React from "react";
 
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const LoginPage = () => {
   // TODO: Implementeer met Formik login formulier - email en wachtwoord, validatie
+
+  const navigate = useNavigate();
+
+  const { setIsAuthenticated } = useAuth();
 
   const { handleChange, handleSubmit, values, handleBlur } = useFormik({
     initialValues: {
@@ -20,6 +26,11 @@ const LoginPage = () => {
             withCredentials: true,
           }
         );
+
+        if (response.status === 200) {
+          setIsAuthenticated(true);
+          navigate("/users", { replace: true });
+        }
       } catch (error) {
         console.log(error);
       }
