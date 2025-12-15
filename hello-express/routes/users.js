@@ -1,4 +1,5 @@
 const express = require("express");
+const usersController = require("../controllers/users_controller");
 const router = express.Router();
 
 const users = [
@@ -14,9 +15,7 @@ const users = [
 
 // http://localhost:3000/users/
 
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
-});
+router.get("/", usersController.getAll);
 
 router.get("/info", (req, res) => {
   res.send("Info ");

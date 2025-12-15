@@ -1,4 +1,4 @@
-const prisma = require("../config/prisma");
+const { prisma } = require("../config/prisma");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -7,16 +7,16 @@ const usersController = {
   getAll: async (req, res) => {
     try {
       const users = await prisma.user.findMany({
-        where: {
-          isVerified: false,
-        },
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          email: true,
-          birthDate: true,
-        },
+        // where: {
+        //   isVerified: false,
+        // },
+        // select: {
+        //   id: true,
+        //   firstName: true,
+        //   lastName: true,
+        //   email: true,
+        //   birthDate: true,
+        // },
       });
       res.json(users);
     } catch (error) {
